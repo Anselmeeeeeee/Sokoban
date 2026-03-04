@@ -34,6 +34,9 @@ import java.io.FileInputStream;
 class AireDeDessin extends JComponent {
     int counter;
     Image img;
+    int pousseurX = -1;
+    int pousseurY = -1;
+
 
     public AireDeDessin() {
         // Chargement de l'image de la même manière que le fichier de niveaux
@@ -48,6 +51,13 @@ class AireDeDessin extends JComponent {
         counter = 1;
     }
 
+    public void fixerPositionPousseur(int x, int y) {
+        this.pousseurX = x;
+        this.pousseurY = y;
+        // Très important : demande à Swing de redessiner le composant
+        repaint();
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         System.out.println("Entree dans paintComponent : " + counter++);
@@ -56,6 +66,10 @@ class AireDeDessin extends JComponent {
         // Le cast permet d'avoir acces a un peu plus de primitives de dessin
         Graphics2D drawable = (Graphics2D) g;
 
+        if (pousseurX == -1 && pousseurY == -1) {
+            pousseurX = getWidth() / 2;
+            pousseurY = getHeight() / 2;
+        }
         // On reccupere quelques infos provenant de la partie JComponent
         int width = getSize().width;
         int height = getSize().height;
@@ -67,6 +81,6 @@ class AireDeDessin extends JComponent {
         drawable.clearRect(0, 0, width, height);
 
         // On affiche une petite image au milieu
-        drawable.drawImage(img, center.x-20, center.y-20, 40, 40, null);
+        drawable.drawImage(img, pousseurX, pousseurY, 40, 40, null);
     }
 }

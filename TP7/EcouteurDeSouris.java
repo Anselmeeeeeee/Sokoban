@@ -30,15 +30,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class EcouteurDeSouris implements MouseListener {
-    AireDeDessin aire;
+    NiveauGraphique NG;
+    jeu Sokoban;
 
-    public EcouteurDeSouris(AireDeDessin aire) {
-        this.aire = aire;
+    public EcouteurDeSouris(NiveauGraphique NG, jeu Sokoban) {
+        this.NG = NG;
+        this.Sokoban = Sokoban;
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("Le bouton de la souris a été pressé en (" + e.getX() + ", " + e.getY() + ")");
-        aire.fixerPositionPousseur(e.getX(), e.getY());
+        // Calcul de la case visée
+        int j = (e.getX() - NG.offsetX) / NG.tailleCase;
+        int i = (e.getY() - NG.offsetY) / NG.tailleCase;
+
+        // On vérifie les bornes
+        if (i >= 0 && i < Sokoban.niveau().lignes() && j >= 0 && j < Sokoban.niveau().colonnes()) {
+            // Déplacement (inclut maintenant la poussée de caisse !)
+            Sokoban.niveau().deplacePousseur(i, j);
+            NG.repaint();
+        }
     }
 
     // Toutes les méthodes qui suivent font partie de l'interface. Si nous ne
@@ -47,7 +58,7 @@ public class EcouteurDeSouris implements MouseListener {
     // qui est une classe qui hérite de MouseListener avec une implémentation
     // vide de toutes ses méthodes.
     @Override
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {}
     @Override
     public void mouseReleased(MouseEvent e) { }
     @Override

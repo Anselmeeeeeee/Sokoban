@@ -8,6 +8,8 @@ import java.io.*;
 class NiveauGraphique extends JComponent {
     Image mur, pousseur, caisse, but, sol;
     jeu JeuSokoban;
+    int tailleCase, offsetX, offsetY;
+
 
     public NiveauGraphique(jeu j) {
         this.JeuSokoban = j;
@@ -35,10 +37,11 @@ class NiveauGraphique extends JComponent {
 
         int nbL = niveau.lignes();
         int nbC = niveau.colonnes();
-        int tailleCase = Math.min(width / nbC, height / nbL);
 
-        int offsetX = (width - (nbC * tailleCase)) / 2;
-        int offsetY = (height - (nbL * tailleCase)) / 2;
+        tailleCase = Math.min(width / nbC, height / nbL);
+
+        offsetX = (width - (nbC * tailleCase)) / 2;
+        offsetY = (height - (nbL * tailleCase)) / 2;
 
         drawable.clearRect(0,0,width,height);
 
@@ -48,10 +51,11 @@ class NiveauGraphique extends JComponent {
                 int x = offsetX + (j * tailleCase);
                 int y = offsetY + (i * tailleCase);
 
+                if (niveau.aBut(i, j)) {
+                    drawable.drawImage(but, x, y, tailleCase, tailleCase, null);
+                }
                 if (niveau.aMur(i, j)) {
                     drawable.drawImage(mur, x, y, tailleCase, tailleCase, null);
-                } else if (niveau.aBut(i, j)) {
-                    drawable.drawImage(but, x, y, tailleCase, tailleCase, null);
                 } else if (niveau.aCaisse(i, j)) {
                     drawable.drawImage(caisse, x, y, tailleCase, tailleCase, null);
                 } else if (niveau.aPousseur(i, j)) {
