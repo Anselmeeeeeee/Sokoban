@@ -83,7 +83,11 @@ public class Niveau {
 
 
     boolean aBut(int i, int j) {
-        return this.carte[i][j] == '.';
+        return this.estUnBut[i][j];
+    }
+
+    boolean aCaisseSurBut(int i, int j){
+        return aCaisse(i,j)&&aBut(i,j);
     }
 
     int get_pousseurX() {

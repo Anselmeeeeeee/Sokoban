@@ -6,7 +6,7 @@ import java.awt.*;
 import java.io.*;
 
 class NiveauGraphique extends JComponent {
-    Image mur, pousseur, caisse, but, sol;
+    Image mur, pousseur, caisse, but, sol, caissesurbut;
     jeu JeuSokoban;
     int tailleCase, offsetX, offsetY;
 
@@ -19,6 +19,7 @@ class NiveauGraphique extends JComponent {
             caisse = ImageIO.read(Configuration.ouvre("res/Images/Caisse.png"));
             but = ImageIO.read(Configuration.ouvre("res/Images/But.png"));
             sol = ImageIO.read(Configuration.ouvre("res/Images/Dioo.png"));
+            caissesurbut = ImageIO.read(Configuration.ouvre("res/Images/Caisse_sur_but.png"));
         } catch (IOException e) {
             Configuration.erreur("impossible de charger les images : " + e.getMessage());
         }
@@ -56,11 +57,23 @@ class NiveauGraphique extends JComponent {
                 }
                 if (niveau.aMur(i, j)) {
                     drawable.drawImage(mur, x, y, tailleCase, tailleCase, null);
+                }
+                if (niveau.aCaisseSurBut(i,j)){
+                    drawable.drawImage(caissesurbut, x, y, tailleCase, tailleCase, null);
                 } else if (niveau.aCaisse(i, j)) {
                     drawable.drawImage(caisse, x, y, tailleCase, tailleCase, null);
                 } else if (niveau.aPousseur(i, j)) {
                     drawable.drawImage(pousseur, x, y, tailleCase, tailleCase, null);
                 }
+            }
+        }
+        if (JeuSokoban.actuel.estGagne()){
+            if (JeuSokoban.prochainNiveau()){
+                System.out.println("Passage au niveau suivant\n");
+            }
+            else {
+                System.out.println("Dernier niveau atteint, fin du jeu\n");
+                return;
             }
         }
     }

@@ -6,9 +6,9 @@ import java.io.IOException;
 
 
 public class jeu  {
-    Niveau actuel;
-    Scanner scan;
-    RedacteurNiveau redacteur;
+    public Niveau actuel;
+    public Scanner scan;
+    public RedacteurNiveau redacteur;
 
     public jeu(Scanner s) {
         scan = s;
@@ -18,7 +18,7 @@ public class jeu  {
         return actuel;
     }
 
-    boolean prochainNiveau() {
+    public boolean prochainNiveau() {
         try {
             if (scan.hasNext()) {
                 return true;
