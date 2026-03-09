@@ -48,6 +48,10 @@ public class EcouteurDeSouris implements MouseListener {
         if (i >= 0 && i < Sokoban.niveau().lignes() && j >= 0 && j < Sokoban.niveau().colonnes()) {
             // Déplacement (inclut maintenant la poussée de caisse !)
             Sokoban.niveau().deplacePousseur(i, j);
+            if (Sokoban.niveau().estGagne()) {
+                System.out.println("Niveau terminé !");
+                Sokoban.chargerNiveauSuivant();
+            }
             NG.repaint();
         }
     }

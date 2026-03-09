@@ -1,6 +1,5 @@
 import Global.Configuration;
 import java.io.*;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +12,9 @@ public class Main {
 
         try (InputStream entree = Configuration.ouvre(args[0])) {
             LecteurNiveaux lecteur = new LecteurNiveaux(entree);
-            jeu monJeu = new jeu(new Scanner(System.in));
+
+            // On passe notre lecteur de fichier directement à la classe jeu
+            jeu monJeu = new jeu(lecteur);
 
             monJeu.actuel = lecteur.lisProchainNiveau();
             if (monJeu.actuel != null) {

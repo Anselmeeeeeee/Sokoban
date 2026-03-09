@@ -14,13 +14,9 @@ public class LecteurNiveaux {
     String nomNiveau = "";
     java.util.List<String> lignesNiveau = new java.util.ArrayList<>();
 
-    System.out.println("test1");
-    System.out.println(my_scanner.toString());
-    System.out.println(lignesNiveau.toString());
+
     while (my_scanner.hasNextLine()) {
-        System.out.println("testb");
         String ligneOriginale = my_scanner.nextLine();
-        System.out.println("testa");
 
         // Ligne vide = fin niveau
         if (ligneOriginale.trim().isEmpty()) {  
@@ -35,17 +31,14 @@ public class LecteurNiveaux {
             ligneCases = ligneOriginale.substring(0, posComment);
         }
 
-        System.out.println(ligneCases);
         if (!ligneCases.trim().isEmpty()) {
             lignesNiveau.add(ligneCases);  
         }
     }
-    System.out.println("test2");
 
     if (lignesNiveau.isEmpty()) {
         return null;
     }
-    System.out.println("test3");
 
     // Dimensions réelles
     int nbLignes = lignesNiveau.size();
@@ -53,11 +46,11 @@ public class LecteurNiveaux {
     for (String ligne : lignesNiveau) {
         nbColonnes = Math.max(nbColonnes, ligne.length());
     }
-    System.out.println("test4");
+
     
     Niveau niveau = new Niveau(nbLignes, nbColonnes);
     niveau.fixeNom(nomNiveau);
-    System.out.println("test5");
+
 
     // Remplissage avec switch
     for (int i = 0; i < nbLignes; i++) {
