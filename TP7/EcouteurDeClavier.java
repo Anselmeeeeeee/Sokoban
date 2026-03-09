@@ -24,21 +24,21 @@ public class EcouteurDeClavier implements KeyListener {
             case KeyEvent.VK_Q:
                 Sokoban.niveau().deplacePousseur(PousseurX,PousseurY-1);
                 break;
-                case KeyEvent.VK_RIGHT:
-                    case KeyEvent.VK_D:
-                    Sokoban.niveau().deplacePousseur(PousseurX,PousseurY+1);
-                    break;
-                    case KeyEvent.VK_UP:
-                        case KeyEvent.VK_Z:
-                        Sokoban.niveau().deplacePousseur(PousseurX-1,PousseurY);
-                        break;
-                        case KeyEvent.VK_DOWN:
-                            case KeyEvent.VK_S:
-                            Sokoban.niveau().deplacePousseur(PousseurX+1,PousseurY);
-                            break;
-                            case KeyEvent.VK_A:
-                                System.exit(0);
-                                break;
+            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
+                Sokoban.niveau().deplacePousseur(PousseurX,PousseurY+1);
+                break;
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_Z:
+                Sokoban.niveau().deplacePousseur(PousseurX-1,PousseurY);
+                break;
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
+                Sokoban.niveau().deplacePousseur(PousseurX+1,PousseurY);
+                break;
+            case KeyEvent.VK_A:
+                System.exit(0);
+                break;
             case KeyEvent.VK_ESCAPE:
                 if (device.getFullScreenWindow() != null) {
                     device.setFullScreenWindow(null);
