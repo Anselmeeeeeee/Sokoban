@@ -135,7 +135,7 @@ public class Niveau {
             int destCaisseC = nouvelleC + dj;
 
 
-            if (estVide(destCaisseL, destCaisseC) || aBut(destCaisseL, destCaisseC)) {
+            if (estVide(destCaisseL, destCaisseC) || (aBut(destCaisseL, destCaisseC) && !aCaisse(destCaisseL, destCaisseC))) {
                 deplaceCaisse(nouvelleL, nouvelleC, destCaisseL, destCaisseC);
             } else {
 

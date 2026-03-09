@@ -44,6 +44,16 @@ class NiveauGraphique extends JComponent {
         offsetX = (width - (nbC * tailleCase)) / 2;
         offsetY = (height - (nbL * tailleCase)) / 2;
 
+        if (JeuSokoban.actuel.estGagne()){
+            if (JeuSokoban.prochainNiveau()){
+                System.out.println("Passage au niveau suivant\n");
+            }
+            else {
+                System.out.println("Dernier niveau atteint, fin du jeu\n");
+                return;
+            }
+        }
+
         drawable.clearRect(0,0,width,height);
 
         drawable.drawImage(sol, 0, 0, width, height, null);
@@ -65,15 +75,6 @@ class NiveauGraphique extends JComponent {
                 } else if (niveau.aPousseur(i, j)) {
                     drawable.drawImage(pousseur, x, y, tailleCase, tailleCase, null);
                 }
-            }
-        }
-        if (JeuSokoban.actuel.estGagne()){
-            if (JeuSokoban.prochainNiveau()){
-                System.out.println("Passage au niveau suivant\n");
-            }
-            else {
-                System.out.println("Dernier niveau atteint, fin du jeu\n");
-                return;
             }
         }
     }
