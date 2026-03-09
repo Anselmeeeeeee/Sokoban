@@ -1,107 +1,90 @@
-//fichier reconstitué
-import java.io.InputStream;
-import java.util.ArrayList;
+import Global.Configuration;
+
+import java.io.*;
 import java.util.Scanner;
 
-/**
- * Lecteur de fichiers de niveaux au format standard Sokoban (.xsb).
- * Gère la lecture ligne par ligne et la conversion en objet Niveau.
- */
 public class LecteurNiveaux {
-    private Scanner scanner;
+    Scanner my_scanner;
 
-    public LecteurNiveaux(InputStream is) {
-        this.scanner = new Scanner(is);
+    public LecteurNiveaux(InputStream flux) {
+        this.my_scanner = new Scanner(flux);
     }
-
-    /**
-     * Lit le prochain niveau disponible dans le flux.
-     * @return un objet Niveau initialisé, ou null s'il n'y a plus de niveaux.
-     */
+    
     public Niveau lisProchainNiveau() {
-        if (this.scanner.hasNext()) {
-            String nomNiveau = "";
-            ArrayList<String> lignesBrutes = new ArrayList<>();
+    String nomNiveau = "";
+    java.util.List<String> lignesNiveau = new java.util.ArrayList<>();
 
-            // 1. Lecture du bloc de texte correspondant au niveau
-            while (this.scanner.hasNextLine()) {
-                String ligne = this.scanner.nextLine();
+    System.out.println("test1");
+    System.out.println(my_scanner.toString());
+    System.out.println(lignesNiveau.toString());
+    while (my_scanner.hasNextLine()) {
+        System.out.println("testb");
+        String ligneOriginale = my_scanner.nextLine();
+        System.out.println("testa");
 
-                // Une ligne vide marque la fin d'un niveau dans le fichier
-                if (ligne.trim().isEmpty()) {
-                    if (lignesBrutes.isEmpty()) continue; // Ignore les lignes vides au début
-                    break;
-                }
-
-                // Gestion des commentaires (caractère ';')
-                int indexCommentaire = ligne.indexOf(';');
-                String contenuLigne = ligne;
-
-                if (indexCommentaire >= 0) {
-                    nomNiveau = ligne.substring(indexCommentaire + 1).trim();
-                    contenuLigne = ligne.substring(0, indexCommentaire);
-                }
-
-                // On n'ajoute la ligne que si elle contient des données de jeu
-                if (!contenuLigne.trim().isEmpty()) {
-                    lignesBrutes.add(contenuLigne);
-                }
-            }
-
-            // Si aucune ligne n'a été lue, on est à la fin du fichier
-            if (lignesBrutes.isEmpty()) {
-                return null;
-            }
-
-            // 2. Calcul des dimensions de la grille
-            int nbLignes = lignesBrutes.size();
-            int nbColonnesMax = 0;
-            for (String s : lignesBrutes) {
-                nbColonnesMax = Math.max(nbColonnesMax, s.length());
-            }
-
-            // 3. Création et remplissage de l'objet Niveau
-            Niveau nouveauNiveau = new Niveau(nbLignes, nbColonnesMax);
-            nouveauNiveau.fixeNom(nomNiveau);
-
-            for (int i = 0; i < nbLignes; i++) {
-                String ligneCourante = lignesBrutes.get(i);
-
-                for (int j = 0; j < nbColonnesMax; j++) {
-                    char caractere;
-
-                    // Si la ligne est plus courte que la largeur max, on complète par du vide
-                    if (j < ligneCourante.length()) {
-                        caractere = ligneCourante.charAt(j);
-                    } else {
-                        caractere = ' ';
-                    }
-
-                    // Interprétation des caractères standards du Sokoban
-                    switch (caractere) {
-                        case '#':
-                            nouveauNiveau.ajouteMur(i, j);
-                            break;
-                        case '$':
-                            nouveauNiveau.ajouteCaisse(i, j);
-                            break;
-                        case '.':
-                            nouveauNiveau.ajouteBut(i, j);
-                            break;
-                        case '@':
-                            nouveauNiveau.ajoutePousseur(i, j);
-                            break;
-                        // Note : Les cas '+' (joueur sur but) et '*' (caisse sur but)
-                        // pourraient être ajoutés ici selon les besoins de ta classe Niveau.
-                    }
-                }
-            }
-
-            return nouveauNiveau;
+        // Ligne vide = fin niveau
+        if (ligneOriginale.trim().isEmpty()) {  
+            break;
         }
-        else {
-            throw new RuntimeException();
+
+        
+        int posComment = ligneOriginale.indexOf(';');
+        String ligneCases = ligneOriginale;
+        if (posComment >= 0) {
+            nomNiveau = ligneOriginale.substring(posComment + 1).trim();
+            ligneCases = ligneOriginale.substring(0, posComment);
+        }
+
+        System.out.println(ligneCases);
+        if (!ligneCases.trim().isEmpty()) {
+            lignesNiveau.add(ligneCases);  
         }
     }
+    System.out.println("test2");
 
+    if (lignesNiveau.isEmpty()) {
+        return null;
+    }
+    System.out.println("test3");
+
+    // Dimensions réelles
+    int nbLignes = lignesNiveau.size();
+    int nbColonnes = 0;
+    for (String ligne : lignesNiveau) {
+        nbColonnes = Math.max(nbColonnes, ligne.length());
+    }
+    System.out.println("test4");
+    
+    Niveau niveau = new Niveau(nbLignes, nbColonnes);
+    niveau.fixeNom(nomNiveau);
+    System.out.println("test5");
+
+    // Remplissage avec switch
+    for (int i = 0; i < nbLignes; i++) {
+        String ligne = lignesNiveau.get(i);
+        for (int j = 0; j < nbColonnes; j++) {
+            char c;
+            if (j < ligne.length()) {
+                c = ligne.charAt(j);
+            } else {
+                c = ' ';
+            }
+            switch (c) {
+                case '#': 
+                niveau.ajouteMur(i, j); 
+                break;
+                case '@': 
+                niveau.ajoutePousseur(i, j); 
+                break;
+                case '$': 
+                niveau.ajouteCaisse(i, j); 
+                break;
+                case '.': 
+                niveau.ajouteBut(i, j); 
+                break;
+            }
+        }
+    }
+    return niveau;
+    }
 }

@@ -45,8 +45,10 @@ class NiveauGraphique extends JComponent {
         offsetY = (height - (nbL * tailleCase)) / 2;
 
         if (JeuSokoban.actuel.estGagne()){
+            //System.out.println("test");
             JeuSokoban.lecteur.lisProchainNiveau();
-            JeuSokoban.niveau.niveau();
+            //System.out.println("test");
+            //JeuSokoban.niveau.niveau();
             repaint();
 
         }
