@@ -9,10 +9,12 @@ public class jeu  {
     public Niveau actuel;
     public Scanner scan;
     public RedacteurNiveau redacteur;
+    public LecteurNiveaux lecteur;
 
     public jeu(Scanner s) {
         scan = s;
         redacteur = new RedacteurNiveau(System.out);
+        lecteur = new LecteurNiveaux(System.in);
     }
     Niveau niveau(){
         return actuel;

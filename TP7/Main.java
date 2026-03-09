@@ -10,7 +10,7 @@ public class Main {
             Configuration.erreur("Usage: java Main <fichier_niveaux.txt>");
             return;
         }
-        
+
         try (InputStream entree = Configuration.ouvre(args[0])) {
             LecteurNiveaux lecteur = new LecteurNiveaux(entree);
             jeu monJeu = new jeu(new Scanner(System.in));
@@ -21,7 +21,7 @@ public class Main {
             } else {
                 Configuration.erreur("Aucun niveau trouvé dans le fichier  ");
             }
-            
+
         } catch (IOException e) {
             Configuration.erreur("lecture fichier: " + e.getMessage());
         }

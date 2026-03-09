@@ -30,6 +30,7 @@ public class InterfaceGraphique implements Runnable {
         //GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //GraphicsDevice device = env.getDefaultScreenDevice();
         //device.setFullScreenWindow(frame);
+        frame.setSize(900, 600);
 
         // Mise à jour de l'état pour que toggleFullscreen fonctionne toujours
         maximized = true;
