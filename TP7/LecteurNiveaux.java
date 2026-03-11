@@ -45,6 +45,7 @@ public class LecteurNiveaux {
     int nbColonnes = 0;
     for (String ligne : lignesNiveau) {
         nbColonnes = Math.max(nbColonnes, ligne.length());
+
     }
 
     
