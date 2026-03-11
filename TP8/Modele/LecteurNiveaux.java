@@ -1,3 +1,4 @@
+package Modele;
 import Global.Configuration;
 
 import java.io.*;
@@ -38,7 +39,7 @@ public class LecteurNiveaux {
 
     if (lignesNiveau.isEmpty()) {
         return null;
-    }²
+    }
 
     // Dimensions réelles
     int nbLignes = lignesNiveau.size();
