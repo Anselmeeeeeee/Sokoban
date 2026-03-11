@@ -58,6 +58,4 @@ public class Configuration {
         choice = choix;
         return choice;
     }
-
-
 }
