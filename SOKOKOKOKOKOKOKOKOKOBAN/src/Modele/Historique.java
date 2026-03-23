@@ -1,3 +1,5 @@
+package Modele;
+
 import java.util.Stack;
 import Modele.Coup;
 
@@ -14,13 +16,11 @@ public class Historique{
     public void jouerCoup(Coup coup){
         historique.push(coup);
         coup.execute();
-        while(!futur.isEmpty()){
-            futur.pop();
-        }
+        futur.clear();
     }
 
     public Coup supprimerCoup(){
-        if (!historique.isEmpty()){
+        if (peutsuppr()){
             Coup coup = historique.pop();
             coup.desexecute();
             futur.push(coup);
@@ -31,8 +31,12 @@ public class Historique{
         }
     }
 
+    public boolean peutsuppr(){
+        return !historique.isEmpty();
+    }
+
     public Coup recupererCoup(){
-        if (!historique.isEmpty()){
+        if (peutrecup()){
             Coup coup = futur.pop();
             coup.execute();
             historique.push(coup);
@@ -41,6 +45,10 @@ public class Historique{
         else{
             return null;
         }
+    }
+
+    public boolean peutrecup(){
+        return !futur.isEmpty();
     }
 
 }
